@@ -20,11 +20,18 @@ This directory contains Jupyter notebooks for exploration, feature engineering, 
    - Addresses class imbalance by applying SMOTE (Synthetic Minority Over-sampling Technique) on the training split only.
    - Saves final preprocessed datasets to `data/processed/` directory.
 
-4. **`modeling.ipynb`** *(To be implemented)*:
-   - For training and evaluating ML models (e.g. Logistic Regression, Random Forest, XGBoost).
+4. **`modeling.ipynb`**:
+   - Loads the SMOTE-resampled training data and the untouched test data for both datasets.
+   - Trains a Logistic Regression baseline and a hyperparameter-tuned XGBoost (`RandomizedSearchCV`, optimizing AUC-PR).
+   - Evaluates both models on the held-out test set with AUC-PR, F1, confusion matrices, and PR curves, and runs 5-fold Stratified CV.
+   - Compares and selects the best model per dataset (XGBoost for both), with a written justification.
+   - Saves all four trained models to `models/`.
 
-5. **`shap-explainability.ipynb`** *(To be implemented)*:
-   - For model explainability using SHAP values.
+5. **`shap-explainability.ipynb`**:
+   - Loads the saved XGBoost models and test data.
+   - Computes built-in (gain-based) feature importance and SHAP summary plots for global interpretation.
+   - Computes SHAP force plots for representative True Positive, False Positive, and False Negative predictions.
+   - Compares SHAP vs. built-in importance, interprets surprising findings, and concludes with business recommendations.
 
 ## How to Run
 Ensure all dependencies in `requirements.txt` are installed:
@@ -34,3 +41,5 @@ pip install -r requirements.txt
 To run the notebooks sequentially:
 1. Load, clean, and explore datasets: Run `eda-fraud-data.ipynb` and `eda-creditcard.ipynb`.
 2. Engineer features and prepare datasets: Run `feature-engineering.ipynb`.
+3. Train, tune, and evaluate models: Run `modeling.ipynb`.
+4. Interpret the selected models: Run `shap-explainability.ipynb`.

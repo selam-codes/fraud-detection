@@ -8,3 +8,5 @@ imbalanced-learn
 xgboost
 shap
 notebook
+reportlab
+pillow
